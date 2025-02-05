@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paquete;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,7 +23,9 @@ class PaqueteController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::select(['id', 'name'])->get();
+
+        return Inertia::render('RegisterPackage', compact('users'));
     }
 
     /**
@@ -30,7 +33,22 @@ class PaqueteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId = $request->user()->id;
+
+        $validated = $request->validate([
+            'nombrePaquete' => 'required|max:100',
+            'descripcionPaquete' => 'required|max:255',
+            'remitente' => 'required|max:50',
+            'usuarioDestinatario' => 'required|integer',
+            'usuarioRecibio' => 'required|max:50',
+            'horaLlegadaPaquete' => 'required|date'
+        ]);
+
+        $validated['usuarioRecepcion'] = $userId;
+
+        Paquete::create($validated);
+
+        return redirect(route('registrar'));
     }
 
     /**

@@ -12,17 +12,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registro_roles', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('nombreRol', length: 50);
             $table->timestamps();
         });
 
-        DB::table('registro_roles')->insert([
+        DB::table('roles')->insert([
             ['nombreRol' => 'Administrador'],
             ['nombreRol' => 'Recepcion'],
             ['nombreRol' => 'Usuario']
         ]);
+
+        Schema::table('users', function(Blueprint $table){
+            $table->unsignedBigInteger('idRol');
+            $table->foreign('idRol')->references('id')->on('roles');
+        });
     }
 
     /**

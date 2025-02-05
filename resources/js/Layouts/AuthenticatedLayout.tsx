@@ -1,7 +1,9 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
+import Logo from '@/Components/Logo';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -9,7 +11,7 @@ export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
-    const user = usePage().props.auth.user;
+    const user = usePage<PageProps>().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -22,7 +24,7 @@ export default function Authenticated({
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <Logo />
                                 </Link>
                             </div>
 
@@ -33,17 +35,16 @@ export default function Authenticated({
                                 >
                                     Inicio
                                 </NavLink>
-                                {
-                                    user.idRol === 3 ?
-                                        <NavLink href={route('paquetes')} active={route().current('paquetes')}>
-                                            Paquetes
-                                        </NavLink>
-                                        :
-                                        <NavLink href={route('registrar')} active={route().current('registrar')}>
-                                            Registrar paquete
-                                        </NavLink>
 
-                                }
+                                <NavLink href={route('paquetes.mostrar')} active={route().current('paquetes.mostrar')}>
+                                    Paquetes
+                                </NavLink>
+
+                                <NavLink href={route('registrar')} active={route().current('registrar')}>
+                                    Registrar paquete
+                                </NavLink>
+
+
                             </div>
                         </div>
 

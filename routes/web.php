@@ -25,12 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/registrar', function () {
-    return Inertia::render('RegisterPackage');
-})->middleware(['auth', 'verified'])->name('registrar');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes');
+    Route::get('/registrar', [PaqueteController::class, 'create'])->name('registrar');
+    Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes.mostrar');
+    Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
 });
 
 require __DIR__ . '/auth.php';

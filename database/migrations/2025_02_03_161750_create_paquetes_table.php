@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registro_paquetes', function (Blueprint $table) {
+        Schema::create('paquetes', function (Blueprint $table) {
             $table->id();
             $table->string('nombrePaquete', length: 100);
             $table->string('descripcionPaquete', length:255);
@@ -19,15 +19,15 @@ return new class extends Migration
             $table->unsignedBigInteger('usuarioRecepcion');
             $table->string('remitente', length: 50);
             $table->dateTime('horaLlegadaPaquete');
-            $table->string('usuarioRecibio');
+            $table->string('usuarioRecibio', length: 50);
             $table->unsignedBigInteger('estadoPaquete');
-            $table->dateTime('horaRecibidaPaquete');
+            $table->dateTime('horaRecibidaPaquete')->nullable();
             $table->timestamps();
 
             //asigning foreign keys for relations
             $table->foreign('usuarioDestinatario')->references('id')->on('users');
             $table->foreign('usuarioRecepcion')->references('id')->on('users');
-            $table->foreign('estadoPaquete')->references('id')->on('registro_estados');
+            $table->foreign('estadoPaquete')->references('id')->on('estados');
         });
     }
 

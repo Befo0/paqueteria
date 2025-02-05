@@ -12,13 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registro_estados', function (Blueprint $table) {
+        Schema::create('estados', function (Blueprint $table) {
             $table->id();
             $table->string('nombreEstado', length: 50);
             $table->timestamps();
         });
 
-        DB::table('registro_estados')->insert([
+        DB::table('estados')->insert([
             ['nombreEstado' => 'Recepcion'],
             ['nombreEstado' => 'Recibido'],
         ]);
