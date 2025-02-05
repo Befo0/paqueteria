@@ -1,4 +1,3 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import Logo from '@/Components/Logo';
 import NavLink from '@/Components/NavLink';
@@ -6,6 +5,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+import { linksByRole } from '@/utils/roleLink'
 
 export default function Authenticated({
     header,
@@ -13,8 +13,9 @@ export default function Authenticated({
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage<PageProps>().props.auth.user;
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+    const userLink = linksByRole[user.idRol] || []
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -35,16 +36,13 @@ export default function Authenticated({
                                 >
                                     Inicio
                                 </NavLink>
-
-                                <NavLink href={route('paquetes.mostrar')} active={route().current('paquetes.mostrar')}>
-                                    Paquetes
-                                </NavLink>
-
-                                <NavLink href={route('registrar')} active={route().current('registrar')}>
-                                    Registrar paquete
-                                </NavLink>
-
-
+                                {
+                                    userLink.map(link => (
+                                        <NavLink key={link.route} href={route(`${link.route}`)} active={route().current(`${link.route}`)} >
+                                            {link.label}
+                                        </NavLink>
+                                    ))
+                                }
                             </div>
                         </div>
 
@@ -149,9 +147,13 @@ export default function Authenticated({
                         >
                             Inicio
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('registrar')} active={route().current('registra')}>
-                            Registrar Paquete
-                        </ResponsiveNavLink>
+                        {
+                            userLink.map(link => 
+                                <ResponsiveNavLink key={link.route} href={route(`${link.route}`)} active={route().current(`${link.route}`)}>
+                                    {link.label}
+                                </ResponsiveNavLink>
+                            )
+                        }
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">

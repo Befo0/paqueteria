@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Paquete;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class PaqueteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $userId = $request->user()->id;
 
+        $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $userId)->get();
+
+        return Inertia::render('Packages/Packages', compact('packages'));
     }
 
     /**
@@ -25,7 +29,7 @@ class PaqueteController extends Controller
     {
         $users = User::select(['id', 'name'])->get();
 
-        return Inertia::render('RegisterPackage', compact('users'));
+        return Inertia::render('Packages/RegisterPackage', compact('users'));
     }
 
     /**
@@ -33,14 +37,16 @@ class PaqueteController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Paquete::class);
+
         $userId = $request->user()->id;
 
         $validated = $request->validate([
-            'nombrePaquete' => 'required|max:100',
-            'descripcionPaquete' => 'required|max:255',
+            'nombrePaquete' => 'required|min:3|max:100',
+            'descripcionPaquete' => 'required|min:10|max:255',
             'remitente' => 'required|max:50',
             'usuarioDestinatario' => 'required|integer',
-            'usuarioRecibio' => 'required|max:50',
+            'usuarioRecibio' => 'required|min:3|max:50',
             'horaLlegadaPaquete' => 'required|date'
         ]);
 
