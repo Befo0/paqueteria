@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Paquete;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -29,11 +30,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
+        $user = $request->user();
+
+        $packages = [];
+
+        if($user && ($user->idRol == '1' || $user->idRol == '2'))
+        {
+            $userId = $user->id;
+
+            if($userId){
+                $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', 1)->get();
+            }
+        }
+
+        return array_merge(
+            parent::share($request),[
             'auth' => [
                 'user' => $request->user(),
             ],
-        ];
+            'packages' => $packages
+        ]);
     }
 }

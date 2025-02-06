@@ -1,3 +1,5 @@
+import { type Package } from "./packages";
+
 export interface User {
     id: number;
     idRol: number;
@@ -11,5 +13,6 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
-    };
+    },
+    packages: Package[];
 };

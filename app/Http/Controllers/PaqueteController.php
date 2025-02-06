@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePaqueteRequest;
 use App\Models\Paquete;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,13 +14,9 @@ class PaqueteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $userId = $request->user()->id;
-
-        $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $userId)->get();
-
-        return Inertia::render('Packages/Packages', compact('packages'));
+        return Inertia::render('Packages/Packages');
     }
 
     /**
@@ -27,7 +24,7 @@ class PaqueteController extends Controller
      */
     public function create()
     {
-        $users = User::select(['id', 'name'])->get();
+        $users = User::select(['id', 'name'])->where('idRol', '!=', '2')->get();
 
         return Inertia::render('Packages/RegisterPackage', compact('users'));
     }
@@ -35,42 +32,19 @@ class PaqueteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePaqueteRequest $request)
     {
         Gate::authorize('create', Paquete::class);
 
         $userId = $request->user()->id;
 
-        $validated = $request->validate([
-            'nombrePaquete' => 'required|min:3|max:100',
-            'descripcionPaquete' => 'required|min:10|max:255',
-            'remitente' => 'required|max:50',
-            'usuarioDestinatario' => 'required|integer',
-            'usuarioRecibio' => 'required|min:3|max:50',
-            'horaLlegadaPaquete' => 'required|date'
-        ]);
+        $validated = $request->validated();
 
         $validated['usuarioRecepcion'] = $userId;
 
         Paquete::create($validated);
 
         return redirect(route('registrar'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Paquete $paquete)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paquete $paquete)
-    {
-        //
     }
 
     /**

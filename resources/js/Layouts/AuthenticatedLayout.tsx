@@ -1,7 +1,7 @@
-import Dropdown from '@/Components/Dropdown';
-import Logo from '@/Components/Logo';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import Dropdown from '@/Components/Modals/Dropdown';
+import {LogoMiBanco} from '@/Components/Logos';
+import NavLink from '@/Components/Links/NavLink';
+import ResponsiveNavLink from '@/Components/Links/ResponsiveNavLink';
 import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
@@ -25,7 +25,7 @@ export default function Authenticated({
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <Logo />
+                                    <LogoMiBanco />
                                 </Link>
                             </div>
 
@@ -43,6 +43,29 @@ export default function Authenticated({
                                         </NavLink>
                                     ))
                                 }
+                                {/* {
+                                    user.idRol === 1
+                                    &&
+                                    <div className='hidden sm:ms-6 sm:flex sm:items-center'>
+                                        <Dropdown>
+                                            <Dropdown.Trigger>
+                                                <span className="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                    >
+                                                        Administración
+                                                    </button>
+                                                </span>
+                                            </Dropdown.Trigger>
+                                            <Dropdown.Content>
+                                                <Dropdown.Link>
+                                                    Administrar usuarios
+                                                </Dropdown.Link>
+                                            </Dropdown.Content>
+                                        </Dropdown>
+                                    </div>
+                                } */}
                             </div>
                         </div>
 
@@ -148,7 +171,7 @@ export default function Authenticated({
                             Inicio
                         </ResponsiveNavLink>
                         {
-                            userLink.map(link => 
+                            userLink.map(link =>
                                 <ResponsiveNavLink key={link.route} href={route(`${link.route}`)} active={route().current(`${link.route}`)}>
                                     {link.label}
                                 </ResponsiveNavLink>

@@ -1,10 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout"
 import { Head } from "@inertiajs/react"
 import Header from "@/Components/Header"
-import PackagesForm from "@/Components/Forms/PackagesForm"
-import { type Packages } from "@/types/packages"
+import ListOfPackages from "@/Components/ListOfPackages"
 
-export default function Packages({packages}: {packages: Packages}) {
+export default function Packages() {
 
     return (
         <AuthenticatedLayout
@@ -15,7 +14,7 @@ export default function Packages({packages}: {packages: Packages}) {
             }
         >
             <Head title="Paquetes" />
-            <PackagesForm packages={packages} />
+            <ListOfPackages />
         </AuthenticatedLayout>
     )
 }
