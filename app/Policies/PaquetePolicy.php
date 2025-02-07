@@ -33,6 +33,14 @@ class PaquetePolicy
     }
 
     /**
+     * Determine whether the user can mark a package as received
+     */
+    public function receive(User $user, Paquete $paquete): Response
+    {
+        return $user->id === $paquete->usuarioDestinatario ? Response::allow() : Response::deny('Este paquete no esta dirigido a este usuario');
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Paquete $paquete): bool

@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/registrar', [PaqueteController::class, 'create'])->name('registrar');
     Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes.mostrar');
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
+    Route::patch('/recibido/{paquete}', [PaqueteController::class, 'receivedPackage'])->name('paquetes.recibido');
 });
 
 require __DIR__ . '/auth.php';

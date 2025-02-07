@@ -7,6 +7,7 @@ use App\Models\Paquete;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PaqueteController extends Controller
@@ -45,6 +46,18 @@ class PaqueteController extends Controller
         Paquete::create($validated);
 
         return redirect(route('registrar'));
+    }
+
+    public function receivedPackage(Paquete $paquete)
+    {
+        Gate::authorize('receive', $paquete);
+
+        $paquete->update([
+            'estadoPaquete' => 2,
+            'horaRecibidaPaquete' => now()->toDateTimeString(),
+        ]);
+
+        return Redirect::route('paquetes.mostrar');
     }
 
     /**

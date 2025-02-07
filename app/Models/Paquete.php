@@ -19,6 +19,7 @@ class Paquete extends Model
         'horaLlegadaPaquete',
         'usuarioRecibio',
         'estadoPaquete',
+        'horaRecibidaPaquete',
     ];
 
     public function User(): BelongsTo 
