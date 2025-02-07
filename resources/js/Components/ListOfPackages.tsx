@@ -1,12 +1,21 @@
 import { usePage } from "@inertiajs/react";
-import InspectPackage from "./Inputs/InspectPackage";
+import InspectPackage from "./Forms/InspectPackage";
 import { PageProps } from "@/types";
+import Pagination from "./Links/Pagination";
 
 export default function PackagesForm() {
-    const packages = usePage<PageProps>().props.packages
+    const packages = usePage<PageProps>().props.packages.data || []
+    const links = usePage<PageProps>().props.packages.links
 
     return (
         <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8">
+            {
+                links.length > 3
+                &&
+                <div className="bg-white rounded-lg p-4">
+                    <Pagination links={links} />
+                </div>
+            }
             <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                 <div className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full overflow-x-auto">
                     {

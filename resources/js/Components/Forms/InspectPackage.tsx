@@ -1,17 +1,19 @@
 import { useState } from "react"
 import PrimaryButton from "../Buttons/PrimaryButton"
-import { type Package } from "@/types/packages"
 import Modal from "../Modals/Modal"
 import SecondaryButton from "../Buttons/SecondaryButton"
-import InputLabel from "./InputLabel"
-import TextInput from "./TextInput"
-import Checkbox from "./Checkbox"
-import { Link } from "@inertiajs/react"
+import InputLabel from "../Inputs/InputLabel"
+import TextInput from "../Inputs/TextInput"
+import Checkbox from "../Inputs/Checkbox"
+import { useForm } from "@inertiajs/react"
+import { toast, Toaster } from "sonner"
+import { Data } from "@/types/packages"
 
-export default function InspectPackage({ packageContent }: { packageContent: Package }) {
+export default function InspectPackage({ packageContent }: { packageContent: Data }) {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [received, setReceived] = useState(false)
+    const {patch} = useForm()
 
     const closeModal = () => {
         setIsModalOpen(false)
@@ -22,9 +24,21 @@ export default function InspectPackage({ packageContent }: { packageContent: Pac
         setIsModalOpen(true)
     }
 
+    const markAsReceived = () => {
+        patch(route('paquetes.recibido', packageContent.id), {
+            onSuccess: () => {
+                toast.success('El paquete se ha marcado como recibido correctamente')
+            },
+            onError: () => {
+                toast.error('Ocurrio un error al actualizar el paquete')
+            }
+        })
+    }
+
     return (
         <>
             <PrimaryButton onClick={openModal}>Inspeccionar</PrimaryButton>
+            <Toaster richColors position="top-right" />
 
             <Modal show={isModalOpen} onClose={closeModal}>
                 <section className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full">
@@ -51,10 +65,9 @@ export default function InspectPackage({ packageContent }: { packageContent: Pac
                         <Checkbox onChange={() => setReceived(!received)} />
                     </div>
                     <div className="w-full flex justify-evenly">
-                        <Link href={route('paquetes.recibido', packageContent.id)} disabled={!received} method="patch" className={`inline-flex items-center rounded-md border border-transparent bg-blue-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-blue-900 ${!received && 'opacity-25'}`}>
-
+                        <PrimaryButton onClick={markAsReceived} disabled={!received}>                            
                             Aceptar
-                        </Link>
+                        </PrimaryButton>
 
                         <SecondaryButton type="button" onClick={closeModal}>
                             Cancelar

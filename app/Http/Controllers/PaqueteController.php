@@ -7,7 +7,6 @@ use App\Models\Paquete;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PaqueteController extends Controller
@@ -57,7 +56,7 @@ class PaqueteController extends Controller
             'horaRecibidaPaquete' => now()->toDateTimeString(),
         ]);
 
-        return Redirect::route('paquetes.mostrar');
+        return redirect(route('paquetes.mostrar'));
     }
 
     /**

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('usuarioRecepcion');
             $table->string('remitente', length: 50);
             $table->dateTime('horaLlegadaPaquete');
-            $table->string('usuarioRecibio', length: 50);
+            $table->string('usuarioRecibio', length: 50)->nullable();
             $table->unsignedBigInteger('estadoPaquete');
             $table->dateTime('horaRecibidaPaquete')->nullable();
             $table->timestamps();

@@ -43,7 +43,7 @@ export default function Authenticated({
                                         </NavLink>
                                     ))
                                 }
-                                {/* {
+                                {
                                     user.idRol === 1
                                     &&
                                     <div className='hidden sm:ms-6 sm:flex sm:items-center'>
@@ -59,13 +59,13 @@ export default function Authenticated({
                                                 </span>
                                             </Dropdown.Trigger>
                                             <Dropdown.Content>
-                                                <Dropdown.Link>
+                                                <Dropdown.Link href={route('admin.users')}>
                                                     Administrar usuarios
                                                 </Dropdown.Link>
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
-                                } */}
+                                }
                             </div>
                         </div>
 

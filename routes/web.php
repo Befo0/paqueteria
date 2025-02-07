@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Paquete;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -31,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes.mostrar');
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
     Route::patch('/recibido/{paquete}', [PaqueteController::class, 'receivedPackage'])->name('paquetes.recibido');
+    Route::get('/admin/usuarios', [AdminController::class, 'index'])->name('admin.users');
 });
+
 
 require __DIR__ . '/auth.php';
