@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy([UserObserver::class])]
@@ -51,8 +52,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function Paquete(): HasMany
+    public function Roles(): BelongsTo
     {
-        return $this->hasMany(Paquete::class);
+        return $this->belongsTo(Roles::class, 'idRol');
     }
 }

@@ -21,9 +21,4 @@ class Paquete extends Model
         'estadoPaquete',
         'horaRecibidaPaquete',
     ];
-
-    public function User(): BelongsTo 
-    {
-        return $this->belongsTo(User::class);
-    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Paquete;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
     Route::patch('/recibido/{paquete}', [PaqueteController::class, 'receivedPackage'])->name('paquetes.recibido');
     Route::get('/admin/usuarios', [AdminController::class, 'index'])->name('admin.users');
+    Route::patch('/admind/usuarios/{user}', [AdminController::class, 'changeRole'])->name('admin.roles');
 });
+
+Route::get('/prueba', function () {});
 
 
 require __DIR__ . '/auth.php';
