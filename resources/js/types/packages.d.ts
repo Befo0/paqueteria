@@ -28,3 +28,11 @@ export interface PaginationLink {
     label:  string;
     active: boolean;
 }
+
+export interface newPackage {
+    id: number,
+    titulo: string,
+    remitente: string,
+    destinatario: number,
+    recepcion: number,
+}

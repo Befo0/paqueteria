@@ -4,7 +4,7 @@ import Modal from "../Modals/Modal";
 import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import { adminUsers } from "@/types/users";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 
 export default function DeleteUser({user}: {user: adminUsers}) {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -37,7 +37,6 @@ export default function DeleteUser({user}: {user: adminUsers}) {
             <DangerButton onClick={openModal}>
                 Eliminar usuario
             </DangerButton>
-            <Toaster richColors position="top-right" />
             <Modal show={isModalOpen} onClose={closeModal}>
                 <section className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full">
                     <div className="flex-1">

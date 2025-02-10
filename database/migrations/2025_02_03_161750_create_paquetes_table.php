@@ -21,6 +21,7 @@ return new class extends Migration
             $table->dateTime('horaLlegadaPaquete');
             $table->string('usuarioRecibio', length: 50)->nullable();
             $table->unsignedBigInteger('estadoPaquete');
+            $table->unsignedBigInteger('estadoEntrega')->nullable();
             $table->dateTime('horaRecibidaPaquete')->nullable();
             $table->timestamps();
 

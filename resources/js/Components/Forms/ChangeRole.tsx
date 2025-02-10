@@ -6,7 +6,7 @@ import { Roles } from "@/types/roles";
 import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import InputError from "../Inputs/InputError";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { adminUsers } from "@/types/users";
 
 interface Props {
@@ -48,7 +48,6 @@ export default function ChangeRole({ user, roles }: Props) {
             <PrimaryButton onClick={openModal}>
                 Cambiar Rol
             </PrimaryButton>
-            <Toaster richColors position="top-right" />
 
             <Modal show={isModalOpen} onClose={closeModal} >
                 <section className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full">

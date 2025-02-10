@@ -2,6 +2,7 @@ import { usePage } from "@inertiajs/react";
 import InspectPackage from "./Forms/InspectPackage";
 import { PageProps } from "@/types";
 import Pagination from "./Links/Pagination";
+import { Toaster } from "sonner";
 
 export default function PackagesForm() {
     const packages = usePage<PageProps>().props.packages.data || []
@@ -9,6 +10,7 @@ export default function PackagesForm() {
 
     return (
         <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8">
+            <Toaster richColors position="top-right" />
             {
                 links.length > 3
                 &&

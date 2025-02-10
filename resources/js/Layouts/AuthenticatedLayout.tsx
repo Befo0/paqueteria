@@ -177,6 +177,15 @@ export default function Authenticated({
                                 </ResponsiveNavLink>
                             )
                         }
+                        {
+                            user.idRol === 1
+                            &&
+                            <>
+                                <ResponsiveNavLink href={route('admin.users')} active={route().current('admin.users')}>
+                                    Administrar usuarios
+                                </ResponsiveNavLink>
+                            </>
+                        }
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">

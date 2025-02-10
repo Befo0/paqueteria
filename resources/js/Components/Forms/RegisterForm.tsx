@@ -12,7 +12,6 @@ export default function RegisterForm({ users }: { users: Users }) {
         descripcionPaquete: '',
         remitente: '',
         usuarioDestinatario: 0,
-        usuarioRecibio: '',
         horaLlegadaPaquete: '',
     })
 
@@ -59,8 +58,6 @@ export default function RegisterForm({ users }: { users: Users }) {
                         </div>
                     </div>
                     <div className="mt-4">
-                        <TextInput type="text" placeholder="Nombre de quien lo recibio..." className="w-full" onChange={(e) => setData('usuarioRecibio', e.target.value)} value={data.usuarioRecibio} />
-                        <InputError message={errors.usuarioRecibio} className="mt-2 font-bold" />
                         <div className="mt-4 flex items-center gap-x-4">
                             <InputLabel htmlFor="arriveTime">Hora de llegada</InputLabel>
                             <input type="datetime-local" name="" id="arriveTime" className="form-style" onChange={(e) => setData('horaLlegadaPaquete', e.target.value)} value={data.horaLlegadaPaquete} />

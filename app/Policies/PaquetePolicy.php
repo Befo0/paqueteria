@@ -41,6 +41,14 @@ class PaquetePolicy
     }
 
     /**
+     * Determine whether a user can change how he will receive the package
+     */
+    public function deliver(User $user, Paquete $paquete): Response
+    {
+        return $this->receive($user, $paquete);
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Paquete $paquete): bool
