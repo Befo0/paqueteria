@@ -17,12 +17,13 @@ interface Props {
 export default function ChangeRole({ user, roles }: Props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { data, setData, patch, errors} = useForm({
+    const { data, setData, patch, errors, processing, reset } = useForm({
         idRol: 0
     })
 
     const openModal = () => {
         setIsModalOpen(true)
+        reset()
     }
 
     const closeModal = () => {
@@ -31,13 +32,14 @@ export default function ChangeRole({ user, roles }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        patch(route('admin.roles', user.id ), {
-           onSuccess: () => {
-            toast.success('El rol ha sido cambiado con exito')
-           },
-           onError: () => {
-            toast.error('Ha ocurrido un error al cambiar el rol')
-           }
+        patch(route('admin.roles', user.id), {
+            onSuccess: () => {
+                closeModal()
+                toast.success('El cambio de rol ha sido exitoso')
+            },
+            onError: () => {
+                toast.error('Ha ocurrido un error al cambiar el rol')
+            }
         })
     }
 
@@ -53,7 +55,7 @@ export default function ChangeRole({ user, roles }: Props) {
                     <div className="flex-1">
                         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-col sm:justify-between">
                             <InputLabel>Selecciona el rol a asignar</InputLabel>
-                            <select defaultValue='0' className="form-style" onChange={(e) => setData('idRol', Number(e.target.value))}>
+                            <select value={data.idRol || 0} className="form-style" onChange={(e) => setData('idRol', Number(e.target.value))}>
                                 <option value="0" disabled>Selecciona el rol</option>
                                 {
                                     roles.map(role => (
@@ -63,7 +65,7 @@ export default function ChangeRole({ user, roles }: Props) {
                             </select>
                             <InputError message={errors.idRol} className="mt-2 font-bold" />
                             <div className="flex gap-x-6 justify-center mt-4">
-                                <PrimaryButton type="submit">
+                                <PrimaryButton type="submit" disabled={processing}>
                                     Cambiar Rol
                                 </PrimaryButton>
                                 <SecondaryButton type="button" onClick={() => setIsModalOpen(false)}>

@@ -6,6 +6,7 @@ use App\Http\Requests\RoleUserRequest;
 use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Termwind\Components\Raw;
 
@@ -36,12 +37,22 @@ class AdminController extends Controller
 
     public function changeRole(RoleUserRequest $request, User $user)
     {
+        Gate::authorize('update', User::class);
 
         $validated = $request->validated();
 
         $user->update([
-            'idRol' => $validated->idRol
+            'idRol' => $validated['idRol']
         ]);
+
+        return redirect(route('admin.users'));
+    }
+
+    public function deleteUser(User $user)
+    {
+        Gate::authorize('delete', User::class);
+
+        $user->delete();
 
         return redirect(route('admin.users'));
     }

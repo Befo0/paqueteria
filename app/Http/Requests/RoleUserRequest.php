@@ -14,7 +14,7 @@ class RoleUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'idRol' => 'required|min:1'
+            'idRol' => 'required|integer|min:1'
         ];
     }
 

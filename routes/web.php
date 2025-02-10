@@ -36,7 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
     Route::patch('/recibido/{paquete}', [PaqueteController::class, 'receivedPackage'])->name('paquetes.recibido');
     Route::get('/admin/usuarios', [AdminController::class, 'index'])->name('admin.users');
-    Route::patch('/admind/usuarios/{user}', [AdminController::class, 'changeRole'])->name('admin.roles');
+    Route::patch('/admin/usuarios/{user}', [AdminController::class, 'changeRole'])->name('admin.roles');
+    Route::delete('/admin/usuarios/{user}', [AdminController::class, 'deleteUser'])->name('admin.delete');
 });
 
 Route::get('/prueba', function () {});
