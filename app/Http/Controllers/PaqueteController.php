@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class PaqueteController extends Controller
@@ -33,7 +34,30 @@ class PaqueteController extends Controller
                 'remitente' => $paquete->remitente,
                 'destinatario' => $paquete->usuarioDestinatario,
                 'recepcion' => $paquete->usuarioRecepcion,
+                'entrega' => $paquete->estadoEntrega,
             ]
+        ]);
+    }
+
+    /**
+     * Displays a list of the Registered Packages
+     */
+    public function list(Request $request){
+        $userId = $request->user()->id;
+
+        $paquete = Paquete::select([
+            'paquetes.id',
+            'paquetes.nombrePaquete', 
+            'paquetes.remitente', 
+            'paquetes.usuarioRecibio', 
+            'paquetes.estadoEntrega', 
+            'users.name as usuarioNombre'
+             ])
+             ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
+             ->where('usuarioRecepcion', $userId)->where('estadoPaquete', 1)->paginate(5);
+
+        return Inertia::render('Packages/ListPackages', [
+            'registeredPackages' => $paquete
         ]);
     }
 
@@ -96,15 +120,28 @@ class PaqueteController extends Controller
 
         $paquete->update($changes);
 
-        return redirect(route('paquetes.mostrar'));
+        return redirect(route('paquete.registrado', $paquete->id));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the name of the person that delivers the package
      */
-    public function update(Request $request, Paquete $paquete)
-    {
-        //
+    public function sentPackage(Paquete $paquete, Request $request){
+
+        Gate::authorize('updateDeliver', $paquete);
+
+        $validated = Validator::make($request->all(), [
+            'usuarioRecibio' => 'required|min:3|max:50'
+        ],$messages = [
+            'usuarioRecibio.required' => 'Debes de poner el nombre de quien entrega el paquete',
+            'usuarioRecibio.min' => 'El nombre debe de ser de al menos 3 caracteres',
+            'usuarioRecibio.max' => 'El nombre debe de ser de maximo 50 caracteres'
+        ])->validate();
+
+        $paquete->update($validated);
+
+        return redirect(route('registro.paquetes'));
+
     }
 
     /**

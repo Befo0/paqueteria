@@ -20,5 +20,10 @@ class Paquete extends Model
         'usuarioRecibio',
         'estadoPaquete',
         'horaRecibidaPaquete',
+        'estadoEntrega',
     ];
+
+    public function User(){
+        return $this->belongsTo(User::class, 'usuarioDestinatario');
+    }
 }

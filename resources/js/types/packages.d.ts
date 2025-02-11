@@ -17,10 +17,12 @@ export interface Package {
 export interface Data {
     id:                 number;
     nombrePaquete:      string;
-    descripcionPaquete: string;
+    descripcionPaquete?: string;
     remitente:          string;
-    horaLlegadaPaquete: string;
-    usuarioRecibio:     string;
+    horaLlegadaPaquete?: string;
+    usuarioRecibio?:     string;
+    estadoEntrega?:     number;
+    usuarioNombre?:      string;
 }
 
 export interface PaginationLink {
@@ -35,4 +37,5 @@ export interface newPackage {
     remitente: string,
     destinatario: number,
     recepcion: number,
+    entrega?: number,
 }

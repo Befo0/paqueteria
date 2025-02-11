@@ -49,6 +49,14 @@ class PaquetePolicy
     }
 
     /**
+     * Determine whether a user can change the person that delivers the package
+     */
+    public function updateDeliver(User $user, Paquete $paquete): Response
+    {
+        return $user->id === $paquete->usuarioRecepcion || $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Paquete $paquete): bool

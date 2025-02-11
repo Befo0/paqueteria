@@ -7,10 +7,9 @@ import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import InputError from "../Inputs/InputError";
 import { toast } from "sonner";
-import { adminUsers } from "@/types/users";
 
 interface Props {
-    user: adminUsers
+    user: number
     roles: Roles
 }
 
@@ -32,7 +31,7 @@ export default function ChangeRole({ user, roles }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        patch(route('admin.roles', user.id), {
+        patch(route('admin.roles', user), {
             onSuccess: () => {
                 closeModal()
                 toast.success('El cambio de rol ha sido exitoso')
@@ -67,7 +66,7 @@ export default function ChangeRole({ user, roles }: Props) {
                                 <PrimaryButton type="submit" disabled={processing}>
                                     Cambiar Rol
                                 </PrimaryButton>
-                                <SecondaryButton type="button" onClick={() => setIsModalOpen(false)}>
+                                <SecondaryButton type="button" onClick={closeModal}>
                                     Cancelar
                                 </SecondaryButton>
                             </div>

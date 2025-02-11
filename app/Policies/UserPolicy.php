@@ -36,7 +36,7 @@ class UserPolicy
      */
     public function update(User $user): Response 
     {
-        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para actualizar el rol');
+        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
     }
 
     /**
@@ -44,7 +44,7 @@ class UserPolicy
      */
     public function delete(User $user): Response
     {
-        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para actualizar el rol');
+        return $this->update($user);
     }
 
     /**

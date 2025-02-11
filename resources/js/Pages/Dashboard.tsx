@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/react';
 export default function Dashboard() {
     return (
         <AuthenticatedLayout>
-            <Head title="Main" />
+            <Head title="Inicio" />
         </AuthenticatedLayout>
     );
 }

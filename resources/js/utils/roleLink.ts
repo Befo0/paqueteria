@@ -11,10 +11,16 @@ export const linksByRole: Record<number, linkContent[]> = {
         {
             route: 'paquetes.mostrar', label: 'Paquetes'
         },
+        {
+            route: 'registro.paquetes', label: 'Registro de paquetes'
+        }
     ],
     2: [
         {
             route: 'registrar', label: 'Registrar paquete'
+        },
+        {
+            route: 'registro.paquetes', label: 'Registro de paquetes'
         }
     ],
     3: [

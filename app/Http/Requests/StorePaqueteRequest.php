@@ -22,7 +22,7 @@ class StorePaqueteRequest extends FormRequest
             'horaLlegadaPaquete' => [
                 'required',
                 'date',
-                Rule::date()->betweenOrEqual(date('Y-01-01'), now()->toDateTimeString()),
+                Rule::date()->betweenOrEqual(today()->subDay(), now()->toDateTimeString()),
             ]
         ];
     }
@@ -30,8 +30,8 @@ class StorePaqueteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'horaLlegadaPaquete.after_or_equal' => 'La fecha no puede ser de hace un año',
-            'horaLlegadaPaquete.before_or_equal' => 'La fecha debe ser antes o igual a este dia',
+            'horaLlegadaPaquete.after_or_equal' => 'La fecha no debe de pasarse de un día',
+            'horaLlegadaPaquete.before_or_equal' => 'La fecha debe ser ayer u hoy',
             'nombrePaquete.required' => 'El titulo del paquete debe ser requerido',
             'nombrePaquete.min' => 'El titulo del paquete debe ser de al menos :min caracteres',
             'nombrePaquete.max' => 'El titulo del paquete debe ser de maximo :max caracteres',

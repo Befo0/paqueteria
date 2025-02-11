@@ -1,12 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout"
 import Header from "@/Components/Header"
-import { usePage } from "@inertiajs/react"
+import { usePage, Head} from "@inertiajs/react"
 import { PageProps } from "@/types"
 import { adminUsers } from "@/types/users"
 import ChangeRole from "@/Components/Forms/ChangeRole"
 import { Roles } from "@/types/roles"
 import DeleteUser from "@/Components/Forms/DeleteUser"
 import { Toaster } from "sonner"
+import Unauthorized from "@/Components/Unauthorized"
 
 interface Props {
     users: adminUsers[],
@@ -21,6 +22,7 @@ export default function AdminUsers({ users, roles }: Props) {
                 Administración de usuarios
             </Header>
         }>
+            <Head title="Usuarios"/>
             {
                 user.idRol === 1
                     ?
@@ -44,9 +46,9 @@ export default function AdminUsers({ users, roles }: Props) {
                                                     <td className="px-6 py-4">{user.name}</td>
                                                     <td className="px-6 py-4">{user.email}</td>
                                                     <td className="px-6 py-4">{user.rol}</td>
-                                                    <td className="flex justify-between items-center h-full py-4">
-                                                        <ChangeRole user={user} roles={roles} />
-                                                        <DeleteUser user={user} />
+                                                    <td className="flex justify-center gap-x-6 items-center h-full py-4">
+                                                        <ChangeRole user={user.id} roles={roles} />
+                                                        <DeleteUser user={user.id} />
                                                     </td>
                                                 </tr>
                                             ))
@@ -57,15 +59,7 @@ export default function AdminUsers({ users, roles }: Props) {
                         </div>
                     </div>
                     :
-                    <div className="py-12">
-                        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div className="p-6 text-gray-900">
-                                    No tienes permisos para ingresar a esta pagina
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   <Unauthorized /> 
             }
         </AuthenticatedLayout>
     )
