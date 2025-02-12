@@ -67,9 +67,9 @@ class PaquetePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Paquete $paquete): bool
+    public function delete(User $user, Paquete $paquete): Response 
     {
-        return false;
+        return $user->idRol == '1' && $paquete->estadoPaquete == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
     }
 
     /**

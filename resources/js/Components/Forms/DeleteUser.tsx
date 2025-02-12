@@ -5,24 +5,18 @@ import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import { adminUsers } from "@/types/users";
 import { toast } from "sonner";
+import { useModal } from "@/hooks/useModal";
 
 export default function DeleteUser({user}: {user: number}) {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    
+    const { isModalOpen, openModal, closeModal} = useModal()
     const { delete: destroy, processing, reset } = useForm()
-
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false)
-        reset()
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         destroy(route('admin.delete', user), {
             onSuccess: () => {
+                reset()
                 closeModal()
                 toast.success('El usuario se ha eliminado con exito')
             },

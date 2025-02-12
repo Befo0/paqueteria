@@ -1,7 +1,7 @@
 import { usePage } from "@inertiajs/react";
-import InspectPackage from "./Forms/InspectPackage";
+import InspectPackage from "../Forms/InspectPackage";
 import { PageProps } from "@/types";
-import Pagination from "./Links/Pagination";
+import Pagination from "../Links/Pagination";
 import { Toaster } from "sonner";
 
 export default function PackagesForm() {

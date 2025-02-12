@@ -149,6 +149,10 @@ class PaqueteController extends Controller
      */
     public function destroy(Paquete $paquete)
     {
-        //
+        Gate::authorize('delete', $paquete);
+
+        $paquete->delete();
+
+        return redirect(route('registro.paquetes'));
     }
 }

@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
-use Termwind\Components\Raw;
 
 class AdminController extends Controller
 {
@@ -16,21 +15,15 @@ class AdminController extends Controller
     {
         $adminId = $request->user()->id;
 
-        $users = User::select(['id', 'name', 'email', 'idRol'])
-                    ->with('Roles:id,nombreRol')
+        $users = User::select(['users.id', 'users.name', 'users.email', 'roles.nombreRol as rol'])
+                    ->join('roles', 'roles.id', '=', 'users.idRol')
                     /* ->where('id', '!=', $adminId) */
-                    ->get()
-                    ->map(fn($user) => [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'rol' => $user->Roles->nombreRol
-                    ]);
+                    ->paginate(5);
 
         $roles = Roles::select(['id', 'nombreRol'])->get();
 
         return Inertia::render('Admin/AdminUsers', [
-            'users' => $users,
+            'usersData' => $users,
             'roles' => $roles,
         ]);
     }

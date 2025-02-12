@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout"
 import { Head, usePage } from "@inertiajs/react"
 import Header from "@/Components/Header"
-import ListOfPackages from "@/Components/ListOfPackages"
+import ListOfPackages from "@/Components/Tables/ListOfPackages"
 import { PageProps } from "@/types"
 import Unauthorized from "@/Components/Unauthorized"
 
@@ -22,7 +22,9 @@ export default function Packages() {
                     ?
                     <ListOfPackages />
                     :
-                   <Unauthorized /> 
+                    <Unauthorized >
+                        No tienes permisos para ingresar a esta pagina
+                    </Unauthorized>
             }
         </AuthenticatedLayout>
     )

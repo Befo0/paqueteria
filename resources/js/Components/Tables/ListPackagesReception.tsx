@@ -1,9 +1,9 @@
 import { Data, PaginationLink } from "@/types/packages"
 import { Toaster } from "sonner"
-import SendPackage from "./Forms/SendPackage"
+import SendPackage from "../Forms/SendPackage"
 import { User } from "@/types"
-import DeletePackage from "./Forms/DeletePackage"
-import Pagination from "./Links/Pagination"
+import DeletePackage from "../Forms/DeletePackage"
+import Pagination from "../Links/Pagination"
 
 interface Props {
     registeredPackages: Data[],
@@ -57,7 +57,7 @@ export default function ListPackagesReception({ registeredPackages, links, user 
                                                     content.estadoEntrega !== 1 && content.usuarioRecibio === null && <SendPackage packageId={content.id} />
                                                 }
                                                 {
-                                                    user.id === 1 && <DeletePackage />
+                                                    user.id === 1 && <DeletePackage packageId={content.id} />
                                                 }
                                             </td>
                                         </tr>

@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     
     Route::patch('/nuevo_registro/{paquete}/{estado}', [PaqueteController::class, 'deliver'])->name('paquete.entrega');
     Route::patch('/recibido/{paquete}', [PaqueteController::class, 'receivedPackage'])->name('paquetes.recibido');
-    Route::patch('registro/paquetes/{paquete}', [PaqueteController::class, 'sentPackage'])->name('paquete.enviado');
+    Route::patch('/registro/paquetes/{paquete}', [PaqueteController::class, 'sentPackage'])->name('paquete.enviado');
+    Route::delete('/registro/paquetes/{paquete}', [PaqueteController::class, 'destroy'])->name('paquete.eliminar');
 
     Route::get('/admin/usuarios', [AdminController::class, 'index'])->name('admin.users');
     Route::patch('/admin/usuarios/{user}', [AdminController::class, 'changeRole'])->name('admin.roles');

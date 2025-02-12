@@ -7,29 +7,21 @@ import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import TextInput from "../Inputs/TextInput";
 import { toast } from "sonner";
+import { useModal } from "@/hooks/useModal";
 
 export default function SendPackage({packageId}: {packageId: number}) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    
+    const { isModalOpen, openModal, closeModal } = useModal() 
     const { data, setData, patch, errors, processing, reset} = useForm({
         usuarioRecibio: '',
     })
-
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
-
-    const closeModal = () => {
-        reset()
-        setIsModalOpen(false)
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         patch(route('paquete.enviado', packageId), {
             onSuccess: () => {
                 closeModal()
+                reset()
                 toast.success('El paquete se ha editado correctamente')
             },
             onError: () => {

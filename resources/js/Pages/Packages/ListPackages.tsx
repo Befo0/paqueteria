@@ -1,7 +1,7 @@
 import { Head, usePage } from "@inertiajs/react"
 import Header from "@/Components/Header"
 import Authenticated from "@/Layouts/AuthenticatedLayout"
-import ListPackagesReception from "@/Components/ListPackagesReception"
+import ListPackagesReception from "@/Components/Tables/ListPackagesReception"
 import { Package } from "@/types/packages"
 import { PageProps } from "@/types"
 import Unauthorized from "@/Components/Unauthorized"
@@ -24,7 +24,9 @@ export default function ListPackages({ registeredPackages }: { registeredPackage
                     ?
                     <ListPackagesReception registeredPackages={registeredPackages.data} links={registeredPackages.links} user={user} />
                     :
-                    <Unauthorized />
+                    <Unauthorized>
+                        No tienes permisos para ingresar a esta pagina
+                    </Unauthorized>
             }
 
         </Authenticated>

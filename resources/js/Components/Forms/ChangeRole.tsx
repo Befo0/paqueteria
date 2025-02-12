@@ -7,6 +7,7 @@ import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
 import InputError from "../Inputs/InputError";
 import { toast } from "sonner";
+import { useModal } from "@/hooks/useModal";
 
 interface Props {
     user: number
@@ -15,25 +16,17 @@ interface Props {
 
 export default function ChangeRole({ user, roles }: Props) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const {isModalOpen, openModal, closeModal} = useModal()
     const { data, setData, patch, errors, processing, reset } = useForm({
         idRol: 0
     })
-
-    const openModal = () => {
-        setIsModalOpen(true)
-        reset()
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false)
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         patch(route('admin.roles', user), {
             onSuccess: () => {
                 closeModal()
+                reset()
                 toast.success('El cambio de rol ha sido exitoso')
             },
             onError: () => {

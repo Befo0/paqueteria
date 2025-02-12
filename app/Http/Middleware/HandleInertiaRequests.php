@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
             $userId = $user->id;
 
             if($userId){
-                $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', 1)->paginate(5);
+                $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio', 'estadoEntrega'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', 1)->paginate(5);
             }
         }
 

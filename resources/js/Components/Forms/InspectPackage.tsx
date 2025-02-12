@@ -5,24 +5,16 @@ import SecondaryButton from "../Buttons/SecondaryButton"
 import InputLabel from "../Inputs/InputLabel"
 import TextInput from "../Inputs/TextInput"
 import Checkbox from "../Inputs/Checkbox"
-import { useForm } from "@inertiajs/react"
+import { Link, useForm } from "@inertiajs/react"
 import { toast} from "sonner"
 import { Data } from "@/types/packages"
+import { useModal } from "@/hooks/useModal"
 
 export default function InspectPackage({ packageContent }: { packageContent: Data }) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const { isModalOpen, openModal, closeModal} = useModal()
     const [received, setReceived] = useState(false)
     const { patch } = useForm()
-
-    const closeModal = () => {
-        setIsModalOpen(false)
-        setReceived(false)
-    }
-
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -30,6 +22,7 @@ export default function InspectPackage({ packageContent }: { packageContent: Dat
         patch(route('paquetes.recibido', packageContent.id), {
             onSuccess: () => {
                 closeModal();
+                setReceived(false)
                 toast.success('El paquete se ha marcado como recibido correctamente');
             },
             onError: () => {
@@ -71,7 +64,13 @@ export default function InspectPackage({ packageContent }: { packageContent: Dat
                             <PrimaryButton type="submit" disabled={!received}>
                                 Aceptar
                             </PrimaryButton>
-
+                            {
+                                packageContent.estadoEntrega === null
+                                &&
+                                <Link href={route('paquete.registrado', packageContent.id)} className="inline-flex items-center rounded-md border border-transparent bg-blue-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-blue-900">
+                                    Ver proceso de envio    
+                                </Link>
+                            }
                             <SecondaryButton type="button" onClick={closeModal}>
                                 Cancelar
                             </SecondaryButton>

@@ -24,7 +24,9 @@ export default function RegisterPackage({ users }: { users: Users }) {
                     ?
                     <RegisterForm users={users} />
                     :
-                   <Unauthorized /> 
+                   <Unauthorized>
+                        No tienes permisos para ingresar a esta pagina
+                   </Unauthorized> 
             }
 
         </AuthenticatedLayout>
