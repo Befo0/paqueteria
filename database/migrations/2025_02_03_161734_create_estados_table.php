@@ -21,6 +21,7 @@ return new class extends Migration
         DB::table('estados')->insert([
             ['nombreEstado' => 'Recepcion'],
             ['nombreEstado' => 'Recibido'],
+            ['nombreEstado' => 'Eliminado'],
         ]);
     }
 

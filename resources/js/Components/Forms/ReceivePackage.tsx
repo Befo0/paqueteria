@@ -1,6 +1,4 @@
 import { newPackage } from "@/types/packages";
-import InputLabel from "../Inputs/InputLabel";
-import TextInput from "../Inputs/TextInput";
 import { Link } from "@inertiajs/react";
 
 export default function ReceivePackage({ newPackage }: { newPackage: newPackage }) {

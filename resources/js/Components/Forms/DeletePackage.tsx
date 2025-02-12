@@ -1,4 +1,3 @@
-import { useState } from "react";
 import DangerButton from "../Buttons/DangerButton";
 import SecondaryButton from "../Buttons/SecondaryButton";
 import Modal from "../Modals/Modal";
@@ -9,11 +8,11 @@ import { toast } from "sonner";
 export default function DeletePackage({packageId}: {packageId: number}) {
 
     const {isModalOpen, openModal, closeModal} = useModal()
-    const {delete: destroy, processing, reset} = useForm()
+    const {patch, processing, reset} = useForm()
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        destroy(route('paquete.eliminar', packageId), {
+        patch(route('paquete.eliminar', packageId), {
             onSuccess: () => {
                 reset()
                 closeModal()

@@ -13,12 +13,19 @@ class AdminController extends Controller
 {
     public function index(Request $request) 
     {
+        Gate::authorize('viewAny', User::class);
+
         $adminId = $request->user()->id;
 
         $users = User::select(['users.id', 'users.name', 'users.email', 'roles.nombreRol as rol'])
-                    ->join('roles', 'roles.id', '=', 'users.idRol')
-                    /* ->where('id', '!=', $adminId) */
-                    ->paginate(5);
+                    ->join('roles', 'roles.id', '=', 'users.idRol');
+                    /* ->where('id', '!=', $adminId); */
+        
+        if($request->state_id && $request->state_id >= 0 && $request->state_id < 2){
+            $users = $users->where('isActive', $request->state_id);
+        }
+
+        $users = $users->paginate(5);
 
         $roles = Roles::select(['id', 'nombreRol'])->get();
 
@@ -45,7 +52,9 @@ class AdminController extends Controller
     {
         Gate::authorize('delete', User::class);
 
-        $user->delete();
+        $user->update([
+            'isActive' => false,
+        ]);
 
         return redirect(route('admin.users'));
     }

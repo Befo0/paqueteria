@@ -11,6 +11,7 @@ class UserObserver
      */
     public function creating(User $user): void
     {
+        $user->isActive = true;
         $user->idRol = 3;
     }
 

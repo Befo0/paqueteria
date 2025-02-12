@@ -11,17 +11,17 @@ class PaquetePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return false;
+        return $user->idRol == '2' || $user->idRol == '1' ? Response::allow() : Response::deny('Necesitas permisos para acceder a esta pagina') ;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether a user can view the page
      */
-    public function view(User $user, Paquete $paquete): bool
+    public function view(User $user): Response
     {
-        return false;
+        return $user->idRol == '1' || $user->idRol == '2' ? Response::allow() : Response::deny('Necesitas permisos para acceder a esta pagina');
     }
 
     /**

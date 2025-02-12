@@ -10,9 +10,9 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return false;
+       return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para acceder a esta pagina'); 
     }
 
     /**

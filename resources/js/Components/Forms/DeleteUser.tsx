@@ -1,20 +1,18 @@
-import { useState } from "react";
 import DangerButton from "../Buttons/DangerButton";
 import Modal from "../Modals/Modal";
 import SecondaryButton from "../Buttons/SecondaryButton";
 import { useForm } from "@inertiajs/react";
-import { adminUsers } from "@/types/users";
 import { toast } from "sonner";
 import { useModal } from "@/hooks/useModal";
 
 export default function DeleteUser({user}: {user: number}) {
     
     const { isModalOpen, openModal, closeModal} = useModal()
-    const { delete: destroy, processing, reset } = useForm()
+    const { patch, processing, reset } = useForm()
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        destroy(route('admin.delete', user), {
+        patch(route('admin.delete', user), {
             onSuccess: () => {
                 reset()
                 closeModal()

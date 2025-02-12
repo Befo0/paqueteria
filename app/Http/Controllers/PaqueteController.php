@@ -19,6 +19,8 @@ class PaqueteController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view', Paquete::class);
+
         return Inertia::render('Packages/Packages');
     }
 
@@ -27,7 +29,9 @@ class PaqueteController extends Controller
      */
     public function paquete(Paquete $paquete)
     {
-        return Inertia::render('Packages/DeliverPackage',[
+        Gate::authorize('view', Paquete::class);
+
+        return Inertia::render('Packages/DeliverPackage', [
             'newPackage' => [
                 'id' => $paquete->id,
                 'titulo' => $paquete->nombrePaquete,
@@ -42,19 +46,31 @@ class PaqueteController extends Controller
     /**
      * Displays a list of the Registered Packages
      */
-    public function list(Request $request){
+    public function list(Request $request)
+    {
+
+        Gate::authorize('viewAny', Paquete::class);
+
         $userId = $request->user()->id;
+        $userRole = $request->user()->idRol;
 
         $paquete = Paquete::select([
             'paquetes.id',
-            'paquetes.nombrePaquete', 
-            'paquetes.remitente', 
-            'paquetes.usuarioRecibio', 
-            'paquetes.estadoEntrega', 
+            'paquetes.nombrePaquete',
+            'paquetes.remitente',
+            'paquetes.usuarioRecibio',
+            'paquetes.estadoEntrega',
             'users.name as usuarioNombre'
-             ])
-             ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
-             ->where('usuarioRecepcion', $userId)->where('estadoPaquete', 1)->paginate(5);
+        ])
+            ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
+            ->where('estadoPaquete', 1)->whereNull('estadoEntrega');
+
+        if ($userRole == '2') {
+            $paquete = $paquete->where('usuarioRecepcion', $userId);
+        }
+
+        $paquete = $paquete->orderBy('horaLlegadaPaquete', 'desc')->paginate(5);
+
 
         return Inertia::render('Packages/ListPackages', [
             'registeredPackages' => $paquete
@@ -66,6 +82,8 @@ class PaqueteController extends Controller
      */
     public function create()
     {
+        Gate::authorize('viewAny', Paquete::class);
+
         $users = User::select(['id', 'name'])->where('idRol', '!=', '2')->get();
 
         return Inertia::render('Packages/RegisterPackage', compact('users'));
@@ -84,7 +102,7 @@ class PaqueteController extends Controller
         $validated['usuarioRecepcion'] = $userId;
 
         $paquete = Paquete::create($validated);
-        
+
         $userEmail = User::select('email')->where('id', $validated['usuarioDestinatario'])->get()[0]['email'];
         Mail::to($userEmail)->send(new NewPaquete($paquete));
 
@@ -106,15 +124,16 @@ class PaqueteController extends Controller
     /**
      * Update the deliver state of the package
      */
-    public function deliver(Request $request, Paquete $paquete, $estado){
-        
+    public function deliver(Request $request, Paquete $paquete, $estado)
+    {
+
         Gate::authorize('deliver', $paquete);
 
         $changes = [
             'estadoEntrega' => $estado
         ];
 
-        if($estado == '1'){
+        if ($estado == '1') {
             $changes['usuarioRecibio'] = $request->user()->name;
         }
 
@@ -126,13 +145,14 @@ class PaqueteController extends Controller
     /**
      * Update the name of the person that delivers the package
      */
-    public function sentPackage(Paquete $paquete, Request $request){
+    public function sentPackage(Paquete $paquete, Request $request)
+    {
 
         Gate::authorize('updateDeliver', $paquete);
 
         $validated = Validator::make($request->all(), [
             'usuarioRecibio' => 'required|min:3|max:50'
-        ],$messages = [
+        ], $messages = [
             'usuarioRecibio.required' => 'Debes de poner el nombre de quien entrega el paquete',
             'usuarioRecibio.min' => 'El nombre debe de ser de al menos 3 caracteres',
             'usuarioRecibio.max' => 'El nombre debe de ser de maximo 50 caracteres'
@@ -141,7 +161,6 @@ class PaqueteController extends Controller
         $paquete->update($validated);
 
         return redirect(route('registro.paquetes'));
-
     }
 
     /**
@@ -151,7 +170,9 @@ class PaqueteController extends Controller
     {
         Gate::authorize('delete', $paquete);
 
-        $paquete->delete();
+        $paquete->update([
+            'estadoPaquete' => 3,
+        ]);
 
         return redirect(route('registro.paquetes'));
     }

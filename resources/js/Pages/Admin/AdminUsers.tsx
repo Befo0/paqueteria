@@ -6,6 +6,7 @@ import { Roles } from "@/types/roles"
 import Unauthorized from "@/Components/Unauthorized"
 import { UsersPagination } from "@/types/users"
 import Users from "@/Components/Tables/Users"
+import Search from "@/Components/Forms/Search"
 
 interface Props {
     usersData: UsersPagination,
@@ -25,7 +26,10 @@ export default function AdminUsers({ usersData, roles }: Props) {
             {
                 user.idRol === 1
                     ?
-                    <Users users={users} roles={roles} links={usersData.links} />
+                    <>
+                        <Search />
+                        <Users users={users} roles={roles} links={usersData.links} />
+                    </>
                     :
                     <Unauthorized >
                         No tienes permisos para ingresar a esta pagina
