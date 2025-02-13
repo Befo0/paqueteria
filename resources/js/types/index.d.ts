@@ -1,5 +1,3 @@
-import {Package } from "./packages";
-
 export interface User {
     id: number;
     idRol: number;
@@ -14,5 +12,4 @@ export type PageProps<
     auth: {
         user: User;
     },
-    packages: Package;
 };

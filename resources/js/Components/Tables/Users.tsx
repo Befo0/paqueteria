@@ -4,6 +4,7 @@ import ChangeRole from "../Forms/ChangeRole";
 import DeleteUser from "../Forms/DeleteUser";
 import { adminUsers, UserLinks } from "@/types/users";
 import { Roles } from "@/types/roles";
+import ActivateUser from "../Forms/ActivateUser";
 
 interface Props {
     users: adminUsers[],
@@ -11,7 +12,7 @@ interface Props {
     links: UserLinks[]
 }
 
-export default function Users({users, roles, links}: Props) {
+export default function Users({ users, roles, links }: Props) {
     return (
         <>
             {
@@ -23,7 +24,7 @@ export default function Users({users, roles, links}: Props) {
             }
             <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8">
                 <Toaster richColors position="top-right" />
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                <div className="bg-white shadow-sm rounded-lg divide-y">
                     <div className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full overflow-x-auto">
                         <table className="w-full border-collapse rounded-lg overflow-hidden shadow-lg bg-white">
                             <thead>
@@ -42,8 +43,19 @@ export default function Users({users, roles, links}: Props) {
                                             <td className="px-6 py-4">{user.email}</td>
                                             <td className="px-6 py-4">{user.rol}</td>
                                             <td className="flex justify-center gap-x-6 items-center h-full py-4">
-                                                <ChangeRole user={user.id} roles={roles} />
-                                                <DeleteUser user={user.id} />
+                                                {
+                                                    user.isActive !== 0
+                                                    &&
+                                                    <>
+                                                        <ChangeRole user={user.id} roles={roles} />
+                                                        <DeleteUser user={user.id} />
+                                                    </>
+                                                }
+                                                {
+                                                    user.isActive === 0
+                                                    &&
+                                                    <ActivateUser userId={user.id} />
+                                                }
                                             </td>
                                         </tr>
                                     ))

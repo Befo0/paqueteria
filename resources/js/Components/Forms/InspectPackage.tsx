@@ -78,8 +78,6 @@ export default function InspectPackage({ packageContent }: { packageContent: Dat
                     </div>
                 </form>
             </Modal>
-
-
         </>
     )
 }

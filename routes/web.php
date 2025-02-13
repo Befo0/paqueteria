@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes.mostrar');
     Route::get('/nuevo_registro/{paquete}', [PaqueteController::class, 'paquete'])->name('paquete.registrado');
     Route::get('/registro/paquetes', [PaqueteController::class, 'list'])->name('registro.paquetes');
+    Route::get('/paquetes/eliminados', [PaqueteController::class, 'eliminated'])->name('paquetes.eliminados');
 
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
 
@@ -35,8 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/registro/paquetes/{paquete}/eliminar', [PaqueteController::class, 'destroy'])->name('paquete.eliminar');
 
     Route::get('/admin/usuarios', [AdminController::class, 'index'])->name('admin.users');
+
     Route::patch('/admin/usuarios/{user}', [AdminController::class, 'changeRole'])->name('admin.roles');
     Route::patch('/admin/usuarios/{user}/eliminar', [AdminController::class, 'deleteUser'])->name('admin.delete');
+    Route::patch('/admin/usuarios/{user}/activar', [AdminController::class, 'activateUser'])->name('admin.activate');
 });
 
 require __DIR__ . '/auth.php';

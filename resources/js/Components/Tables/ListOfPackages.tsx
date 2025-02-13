@@ -3,11 +3,16 @@ import InspectPackage from "../Forms/InspectPackage";
 import { PageProps } from "@/types";
 import Pagination from "../Links/Pagination";
 import { Toaster } from "sonner";
+import { Data, PaginationLink } from "@/types/packages";
+import InspectDeletedPackage from "../Forms/InspectDeletedPackage";
 
-export default function PackagesForm() {
-    const packages = usePage<PageProps>().props.packages.data || []
-    const links = usePage<PageProps>().props.packages.links
+interface Props {
+    url: string
+    packages: Data[]
+    links: PaginationLink[]
+}
 
+export default function PackagesForm({ url, packages, links }: Props) {
     return (
         <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8">
             <Toaster richColors position="top-right" />
@@ -43,7 +48,13 @@ export default function PackagesForm() {
                                             <td className="px-6 py-4">{content.remitente}</td>
                                             <td className="px-6 py-4">{content.horaLlegadaPaquete}</td>
                                             <td className="px-6 py-4 text-center">
-                                                <InspectPackage packageContent={content} />
+                                                {
+                                                    url === '/paquetes'
+                                                    ?
+                                                    <InspectPackage packageContent={content} />
+                                                    :
+                                                    <InspectDeletedPackage packageContent={content} />
+                                                }
                                             </td>
                                         </tr>
                                     ))}

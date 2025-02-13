@@ -30,25 +30,12 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $user = $request->user();
-
-        $packages = [];
-
-        if($user && ($user->idRol == '1' || $user->idRol == '2'))
-        {
-            $userId = $user->id;
-
-            if($userId){
-                $packages = Paquete::select(['id','nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio', 'estadoEntrega'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', 1)->paginate(5);
-            }
-        }
 
         return array_merge(
             parent::share($request),[
             'auth' => [
                 'user' => $request->user(),
             ],
-            'packages' => $packages
         ]);
     }
 }

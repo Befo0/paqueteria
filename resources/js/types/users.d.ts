@@ -9,7 +9,8 @@ export interface adminUsers {
     id: number,
     name: string,
     email: string,
-    rol: string
+    rol: string,
+    isActive: number
 }
 
 export interface UsersPagination {

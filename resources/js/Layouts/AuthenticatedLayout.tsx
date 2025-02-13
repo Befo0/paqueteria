@@ -62,6 +62,9 @@ export default function Authenticated({
                                                 <Dropdown.Link href={route('admin.users')}>
                                                     Administrar usuarios
                                                 </Dropdown.Link>
+                                                <Dropdown.Link href={route('paquetes.eliminados')}>
+                                                    Paquetes eliminados
+                                                </Dropdown.Link>
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
@@ -183,6 +186,9 @@ export default function Authenticated({
                             <>
                                 <ResponsiveNavLink href={route('admin.users')} active={route().current('admin.users')}>
                                     Administrar usuarios
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('paquetes.eliminados')} active={route().current('paquetes.eliminados')}>
+                                    Paquetes eliminados
                                 </ResponsiveNavLink>
                             </>
                         }

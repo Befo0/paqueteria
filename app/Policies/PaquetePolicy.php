@@ -25,6 +25,14 @@ class PaquetePolicy
     }
 
     /**
+     * Determine whether a user can view the eliminated packages
+     */
+    public function eliminated(User $user): Response
+    {
+        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permisos para acceder a esta pagina');
+    }
+
+    /**
      * Determine whether the user can create models.
      */
     public function create(User $user): Response

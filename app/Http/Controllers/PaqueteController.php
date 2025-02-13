@@ -14,14 +14,36 @@ use Inertia\Inertia;
 
 class PaqueteController extends Controller
 {
+
+    public function packages(User $user, $state)
+    {
+        $packages = [];
+
+        if ($user && ($user->idRol == '1' || $user->idRol == '2')) {
+            $userId = $user->id;
+
+            if ($userId) {
+                $packages = Paquete::select(['id', 'nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio', 'estadoEntrega'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', $state)->paginate(5);
+            }
+        }
+
+        return $packages;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('view', Paquete::class);
 
-        return Inertia::render('Packages/Packages');
+        $user = $request->user();
+        
+        $paquete = $this->packages($user, 1);
+
+        return Inertia::render('Packages/Packages', [
+            'registeredPackages' => $paquete
+        ]);
     }
 
     /**
@@ -73,6 +95,22 @@ class PaqueteController extends Controller
 
 
         return Inertia::render('Packages/ListPackages', [
+            'registeredPackages' => $paquete
+        ]);
+    }
+
+    /**
+     * Shows the eliminated packages
+     */
+    public function eliminated(Request $request)
+    {
+        Gate::authorize('eliminated', Paquete::class);
+
+        $user = $request->user();
+
+        $paquete = $this->packages($user, 3);
+
+        return Inertia::render('Packages/Packages', [
             'registeredPackages' => $paquete
         ]);
     }
