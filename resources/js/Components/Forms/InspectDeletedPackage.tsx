@@ -11,7 +11,7 @@ export default function InspectDeletedPackage({packageContent}: {packageContent:
 
     return (
         <>
-            <PrimaryButton onClick={openModal}>Inspeccionar eliminado</PrimaryButton>
+            <PrimaryButton onClick={openModal}>Inspeccionar paquete eliminado</PrimaryButton>
 
             <Modal show={isModalOpen} onClose={closeModal}>
                 <section className="p-4 sm:p-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full">
