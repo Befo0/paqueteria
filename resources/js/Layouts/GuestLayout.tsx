@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/Modals/ApplicationLogo';
+import { LogoMiBanco } from '@/Components/Logos';
 import { Link } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
@@ -7,7 +7,7 @@ export default function Guest({ children }: PropsWithChildren) {
         <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
             <div>
                 <Link href="/">
-                    <ApplicationLogo />
+                    <LogoMiBanco width='400' height='100' viewBox='0 0 150 34' />
                 </Link>
             </div>
 
