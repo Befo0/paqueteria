@@ -21,10 +21,10 @@ class AdminController extends Controller
         $adminId = $request->user()->id;
 
         $users = User::select(['users.id', 'users.name', 'users.email', 'users.isActive', 'roles.nombreRol as rol'])
-            ->join('roles', 'roles.id', '=', 'users.idRol');
-        /* ->where('id', '!=', $adminId); */
+            ->join('roles', 'roles.id', '=', 'users.idRol')
+            ->where('users.id', '!=', $adminId);
 
-        if ($request->state_id && $request->state_id >= 0 && $request->state_id < 2) {
+        if (strlen($request->state_id) > 0 && $request->state_id < 2) {
             $users = $users->where('isActive', $request->state_id);
         }
 
@@ -54,7 +54,7 @@ class AdminController extends Controller
         return redirect(route('admin.users'));
     }
 
-    public function ActivateUser(User $user) 
+    public function ActivateUser(User $user)
     {
         Gate::authorize('update', User::class);
 
