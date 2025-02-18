@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return redirect(route('main'));
+    return redirect('/index.php/inicio');
 });
 
 Route::get('/inicio', function () {

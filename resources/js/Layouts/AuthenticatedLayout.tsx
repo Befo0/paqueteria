@@ -24,7 +24,7 @@ export default function Authenticated({
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
+                                <Link href="/inicio">
                                     <LogoMiBanco width="150" height="34" viewBox="0 0 150 34" />
                                 </Link>
                             </div>
