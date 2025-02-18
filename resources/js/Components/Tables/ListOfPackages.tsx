@@ -47,7 +47,7 @@ export default function PackagesForm({ url, packages, links }: Props) {
                                             <td className="px-6 py-4">{content.nombrePaquete}</td>
                                             <td className="px-6 py-4">{content.remitente}</td>
                                             <td className="px-6 py-4">{content.horaLlegadaPaquete}</td>
-                                            <td className="px-6 py-4 text-center">
+                                            <td className="px-6 py-4 text-center flex justify-center">
                                                 {
                                                     url.includes('eliminados')
                                                     ?
