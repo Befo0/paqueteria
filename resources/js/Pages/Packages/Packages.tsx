@@ -25,7 +25,7 @@ export default function Packages({registeredPackages}: {registeredPackages: Pack
         >
             <Head title="Paquetes" />
             {
-                user.id === 1 || user.id === 3
+                user.idRol === 1 || user.idRol === 3
                     ?
                     <ListOfPackages url={page} packages={registeredPackages.data} links={registeredPackages.links} />
                     :

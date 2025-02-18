@@ -12,7 +12,7 @@ class UserPolicy
      */
     public function viewAny(User $user): Response
     {
-       return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para acceder a esta pagina'); 
+       return $user->idRol === 1 ? Response::allow() : Response::deny('No tienes permiso para acceder a esta pagina'); 
     }
 
     /**
@@ -36,7 +36,7 @@ class UserPolicy
      */
     public function update(User $user): Response 
     {
-        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
+        return $user->idRol === 1 ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
     }
 
     /**

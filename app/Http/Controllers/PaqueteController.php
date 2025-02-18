@@ -15,11 +15,11 @@ use Inertia\Inertia;
 class PaqueteController extends Controller
 {
 
-    public function packages(User $user, int $state)
+    public function packages(User $user, $state)
     {
         $packages = [];
 
-        if ($user && ($user->idRol == '1' || $user->idRol == '2')) {
+        if ($user && ($user->idRol === 1 || $user->idRol === 3)) {
             $userId = $user->id;
 
             if ($userId) {
@@ -38,7 +38,7 @@ class PaqueteController extends Controller
         Gate::authorize('view', Paquete::class);
 
         $user = $request->user();
-        
+
         $paquete = $this->packages($user, 1);
 
         return Inertia::render('Packages/Packages', [
@@ -85,7 +85,7 @@ class PaqueteController extends Controller
             'users.name as usuarioNombre'
         ])
             ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
-            ->where('estadoPaquete', 1)->whereNull('estadoEntrega');
+            ->where('estadoPaquete', 1);
 
         if ($userRole == '2') {
             $paquete = $paquete->where('usuarioRecepcion', $userId);
@@ -122,7 +122,7 @@ class PaqueteController extends Controller
     {
         Gate::authorize('viewAny', Paquete::class);
 
-        $users = User::select(['id', 'name'])->where('idRol', '!=', '2')->get();
+        $users = User::select(['id', 'name'])->where('idRol', '!=', 2)->get();
 
         return Inertia::render('Packages/RegisterPackage', compact('users'));
     }
@@ -171,7 +171,7 @@ class PaqueteController extends Controller
             'estadoEntrega' => $estado
         ];
 
-        if ($estado == '1') {
+        if ($estado === 1) {
             $changes['usuarioRecibio'] = $request->user()->name;
         }
 

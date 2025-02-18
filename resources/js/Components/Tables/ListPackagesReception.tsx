@@ -54,10 +54,10 @@ export default function ListPackagesReception({ registeredPackages, links, user 
                                             <td className="px-6 py-4">{content.estadoEntrega !== null ? (content.estadoEntrega === 1 ? 'Recoger' : 'Enviar') : 'Sin especificar'}</td>
                                             <td className="px-6 py-4 text-center flex justify-center gap-x-6">
                                                 {
-                                                    content.estadoEntrega !== 1 && content.usuarioRecibio === null && <SendPackage packageId={content.id} />
+                                                    content.estadoEntrega !== 1 && (content.usuarioRecibio === null && content.estadoEntrega !== null) && <SendPackage packageId={content.id} />
                                                 }
                                                 {
-                                                    user.id === 1 && <DeletePackage packageId={content.id} />
+                                                    user.id === 1 && content.estadoEntrega === null && <DeletePackage packageId={content.id} />
                                                 }
                                             </td>
                                         </tr>

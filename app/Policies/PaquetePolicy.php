@@ -13,7 +13,7 @@ class PaquetePolicy
      */
     public function viewAny(User $user): Response
     {
-        return $user->idRol == '2' || $user->idRol == '1' ? Response::allow() : Response::deny('Necesitas permisos para acceder a esta pagina') ;
+        return $user->idRol === 2 || $user->idRol === 1 ? Response::allow() : Response::deny('Necesitas permisos para acceder a esta pagina') ;
     }
 
     /**
@@ -21,7 +21,7 @@ class PaquetePolicy
      */
     public function view(User $user): Response
     {
-        return $user->idRol == '1' || $user->idRol == '2' ? Response::allow() : Response::deny('Necesitas permisos para acceder a esta pagina');
+        return $user->idRol === 1 || $user->idRol === 3 ? Response::allow() : Response::deny('Solo usuarios pueden recibir paquetes');
     }
 
     /**
@@ -29,7 +29,7 @@ class PaquetePolicy
      */
     public function eliminated(User $user): Response
     {
-        return $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permisos para acceder a esta pagina');
+        return $user->idRol === 1 ? Response::allow() : Response::deny('No tienes permisos para acceder a esta pagina');
     }
 
     /**
@@ -37,7 +37,7 @@ class PaquetePolicy
      */
     public function create(User $user): Response
     {
-        return $user->idRol == '1' || $user->idRol == '2' ? Response::allow() : Response::deny('No estas autorizado para registrar paquetes');
+        return $user->idRol === 1 || $user->idRol === 2 ? Response::allow() : Response::deny('No estas autorizado para registrar paquetes');
     }
 
     /**
@@ -61,7 +61,7 @@ class PaquetePolicy
      */
     public function updateDeliver(User $user, Paquete $paquete): Response
     {
-        return $user->id === $paquete->usuarioRecepcion || $user->idRol == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
+        return $user->id === $paquete->usuarioRecepcion || $user->idRol === 1 ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
     }
 
     /**
@@ -77,7 +77,7 @@ class PaquetePolicy
      */
     public function delete(User $user, Paquete $paquete): Response 
     {
-        return $user->idRol == '1' && $paquete->estadoPaquete == '1' ? Response::allow() : Response::deny('No tienes permiso para realizar esta acción');
+        return $user->idRol === 1 && $paquete->estadoPaquete === 1 && empty($paquete->estadoEntrega) ? Response::allow() : Response::deny('No se puede eliminar el paquete');
     }
 
     /**
