@@ -9,7 +9,7 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
+    resolve: (name: string) =>
         resolvePageComponent(
             `./Pages/${name}.tsx`,
             import.meta.glob('./Pages/**/*.tsx'),
