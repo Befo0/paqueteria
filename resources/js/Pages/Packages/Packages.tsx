@@ -9,17 +9,16 @@ import { Package } from "@/types/packages"
 export default function Packages({registeredPackages}: {registeredPackages: Package}) {
     const user = usePage<PageProps>().props.auth.user
     const page = usePage<PageProps>().url
-
     return (
         <AuthenticatedLayout
             header={
                 <Header>
                     {
-                        page === '/paquetes'
+                        page.includes('eliminados') 
                         ?
-                        'Paquetes recibidos'
-                        :
                         'Paquetes eliminados'
+                        :
+                        'Paquetes recibidos'
                     }
                 </Header>
             }

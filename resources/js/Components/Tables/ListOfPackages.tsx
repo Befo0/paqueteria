@@ -49,11 +49,11 @@ export default function PackagesForm({ url, packages, links }: Props) {
                                             <td className="px-6 py-4">{content.horaLlegadaPaquete}</td>
                                             <td className="px-6 py-4 text-center">
                                                 {
-                                                    url === '/paquetes'
+                                                    url.includes('eliminados')
                                                     ?
-                                                    <InspectPackage packageContent={content} />
-                                                    :
                                                     <InspectDeletedPackage packageContent={content} />
+                                                    :
+                                                    <InspectPackage packageContent={content} />
                                                 }
                                             </td>
                                         </tr>

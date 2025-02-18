@@ -15,7 +15,7 @@ use Inertia\Inertia;
 class PaqueteController extends Controller
 {
 
-    public function packages(User $user, $state)
+    public function packages(User $user, int $state)
     {
         $packages = [];
 
