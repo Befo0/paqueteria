@@ -5,7 +5,7 @@ import PrimaryButton from "../Buttons/PrimaryButton";
 import SecondaryButton from "../Buttons/SecondaryButton";
 
 export default function Search() {
-    const { data, setData, get, errors } = useForm({
+    const { data, setData, get, errors, reset } = useForm({
         state_id: 1
     })
 
@@ -15,6 +15,7 @@ export default function Search() {
         e.preventDefault()
         get(route('admin.users'), {
             onSuccess: () => {
+                reset()
                 setFilter(false);
             }
         })

@@ -20,7 +20,7 @@ export default function ListPackages({ registeredPackages }: { registeredPackage
         >
             <Head title="Registro" />
             {
-                user.id === 2 || user.id === 1
+                user.idRol === 2 || user.idRol === 1
                     ?
                     <ListPackagesReception registeredPackages={registeredPackages.data} links={registeredPackages.links} user={user} />
                     :

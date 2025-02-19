@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/nuevo_registro/{paquete}', [PaqueteController::class, 'paquete'])->name('paquete.registrado');
     Route::get('/registro/paquetes', [PaqueteController::class, 'list'])->name('registro.paquetes');
     Route::get('/paquetes/eliminados', [PaqueteController::class, 'eliminated'])->name('paquetes.eliminados');
+    Route::get('/historial/paquetes', [PaqueteController::class, 'history'])->name('paquetes.history');
 
     Route::post('/guardar', [PaqueteController::class, 'store'])->name('paquetes.guardar');
 

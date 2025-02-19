@@ -36,13 +36,13 @@ export default function RegisterForm({ users }: { users: Users }) {
                 <form action="" onSubmit={handleSubmit} >
                     <div className="flex flex-col mb-4">
                         <InputLabel htmlFor="title">Titulo</InputLabel>
-                        <TextInput type="text" id="title" placeholder="Titulo del paquete" value={data.nombrePaquete} onChange={(e) => setData('nombrePaquete', e.target.value)} />
+                        <TextInput autoComplete="off" type="text" id="title" placeholder="Titulo del paquete" value={data.nombrePaquete} onChange={(e) => setData('nombrePaquete', e.target.value)} />
                         <InputError message={errors.nombrePaquete} className="mt-2 font-bold" />
                     </div>
                     <textarea id="" className="block w-full form-style h-32 resize-none" placeholder="Descripción del paquete..." onChange={(e) => setData('descripcionPaquete', e.target.value)} value={data.descripcionPaquete}></textarea>
                     <InputError message={errors.descripcionPaquete} className="mt-2 font-bold" />
                     <div className="flex flex-col mt-4 gap-y-4">
-                        <TextInput type="text" id="sender" placeholder="Enviado por..." onChange={(e) => setData('remitente', e.target.value)} value={data.remitente} />
+                        <TextInput autoComplete="off" type="text" id="sender" placeholder="Enviado por..." onChange={(e) => setData('remitente', e.target.value)} value={data.remitente} />
                         <InputError message={errors.remitente} className="mt-2 font-bold" />
                         <div className="flex justify-start items-center gap-x-2">
                             <InputLabel htmlFor="addressee">Destinatario del paquete</InputLabel>

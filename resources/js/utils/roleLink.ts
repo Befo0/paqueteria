@@ -13,6 +13,9 @@ export const linksByRole: Record<number, linkContent[]> = {
         },
         {
             route: 'registro.paquetes', label: 'Registro de paquetes'
+        },
+        {
+            route: 'paquetes.history' , label: 'Historial de paquetes'
         }
     ],
     2: [
@@ -26,6 +29,9 @@ export const linksByRole: Record<number, linkContent[]> = {
     3: [
         {
             route: 'paquetes.mostrar', label: 'Paquetes'
+        },
+        {
+            route: 'paquetes.history', label: 'Historial de paquetes'
         }
     ]
 }

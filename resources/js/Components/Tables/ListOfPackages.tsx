@@ -1,21 +1,19 @@
-import { usePage } from "@inertiajs/react";
 import InspectPackage from "../Forms/InspectPackage";
-import { PageProps } from "@/types";
 import Pagination from "../Links/Pagination";
 import { Toaster } from "sonner";
 import { Data, PaginationLink } from "@/types/packages";
 import InspectDeletedPackage from "../Forms/InspectDeletedPackage";
 import Unauthorized from "../Unauthorized";
+import { Link } from "@inertiajs/react";
 
 interface Props {
-    url: string
     packages: Data[]
     links: PaginationLink[]
 }
 
-export default function ListOfPackages({ url, packages, links }: Props) {
+export default function ListOfPackages({ packages, links }: Props) {
     const registeredPackages = packages || []
-    const packagesLinks = links || [] 
+    const packagesLinks = links || []
 
     return (
         <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -53,9 +51,11 @@ export default function ListOfPackages({ url, packages, links }: Props) {
                                                 <td className="px-6 py-4">{content.horaLlegadaPaquete}</td>
                                                 <td className="px-6 py-4 text-center flex justify-center">
                                                     {
-                                                        url.includes('eliminados')
+                                                        content.estadoEntrega === null
                                                             ?
-                                                            <InspectDeletedPackage packageContent={content} />
+                                                            <Link href={route('paquete.registrado', content.id)} className="inline-flex items-center rounded-md border border-transparent bg-blue-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-blue-900">
+                                                                Ver proceso de envio
+                                                            </Link>
                                                             :
                                                             <InspectPackage packageContent={content} />
                                                     }

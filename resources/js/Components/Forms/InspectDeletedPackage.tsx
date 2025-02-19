@@ -19,12 +19,12 @@ export default function InspectDeletedPackage({packageContent}: {packageContent:
                         <div className="flex flex-col sm:flex-col sm:justify-between">
                             <div className="w-full mb-4">
                                 <InputLabel>Titulo del paquete</InputLabel>
-                                <TextInput readOnly className="w-full" value={packageContent.nombrePaquete} />
+                                <TextInput readOnly className="w-full pointer-events-none" value={packageContent.nombrePaquete} />
                             </div>
                             <InputLabel>Descipción del paquete</InputLabel>
-                            <textarea value={packageContent.descripcionPaquete} readOnly className="form-style resize-none" ></textarea>
+                            <textarea value={packageContent.descripcionPaquete} readOnly className="form-style resize-none pointer-events-none" ></textarea>
                             <InputLabel className="mt-4">Usuario que recibio el paquete</InputLabel>
-                            <TextInput readOnly value={packageContent.usuarioRecibio || ''} />
+                            <TextInput readOnly value={packageContent.usuarioRecibio || ''} className="pointer-events-none" />
                             <div className="flex flex-col sm:flex-row items-center mt-4 gap-x-6">
                                 <InputLabel>Hora de llegada del paquete</InputLabel>
                                 <input className="form-style" readOnly type="datetime-local" value={packageContent.horaLlegadaPaquete} />

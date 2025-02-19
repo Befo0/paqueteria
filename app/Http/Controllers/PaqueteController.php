@@ -15,19 +15,33 @@ use Inertia\Inertia;
 class PaqueteController extends Controller
 {
 
-    public function packages(User $user, $state)
+    public function packages(User $user, int $state)
     {
-        $packages = [];
+        $paquete = [];
 
-        if ($user && ($user->idRol === 1 || $user->idRol === 3)) {
-            $userId = $user->id;
+        $userId = $user->id;
+        $userRole = $user->idRol;
 
-            if ($userId) {
-                $packages = Paquete::select(['id', 'nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio', 'estadoEntrega'])->where('usuarioDestinatario', $userId)->where('estadoPaquete', $state)->paginate(5);
-            }
+        $paquete = Paquete::select([
+            'paquetes.id',
+            'paquetes.nombrePaquete',
+            'paquetes.remitente',
+            'paquetes.usuarioRecibio',
+            'paquetes.estadoEntrega',
+            'users.name as usuarioNombre'
+        ])
+            ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
+            ->where('estadoPaquete', $state);
+
+        if ($userRole === 2) {
+            $paquete = $paquete->where('usuarioRecepcion', $userId);
+        } else if ($userRole === 3) {
+            $paquete = $paquete->where('usuarioDestinatario', $userId);
         }
 
-        return $packages;
+        $paquete = $paquete->orderBy('horaLlegadaPaquete', 'desc')->paginate(5);
+
+        return $paquete;
     }
 
     /**
@@ -39,7 +53,7 @@ class PaqueteController extends Controller
 
         $user = $request->user();
 
-        $paquete = $this->packages($user, 1);
+        $paquete = Paquete::select(['id', 'nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $user->id)->where('estadoPaquete', 1)->paginate(5);
 
         return Inertia::render('Packages/Packages', [
             'registeredPackages' => $paquete
@@ -73,29 +87,29 @@ class PaqueteController extends Controller
 
         Gate::authorize('viewAny', Paquete::class);
 
-        $userId = $request->user()->id;
-        $userRole = $request->user()->idRol;
+        $user = $request->user();
 
-        $paquete = Paquete::select([
-            'paquetes.id',
-            'paquetes.nombrePaquete',
-            'paquetes.remitente',
-            'paquetes.usuarioRecibio',
-            'paquetes.estadoEntrega',
-            'users.name as usuarioNombre'
-        ])
-            ->join('users', 'users.id', '=', 'paquetes.usuarioDestinatario')
-            ->where('estadoPaquete', 1);
-
-        if ($userRole == '2') {
-            $paquete = $paquete->where('usuarioRecepcion', $userId);
-        }
-
-        $paquete = $paquete->orderBy('horaLlegadaPaquete', 'desc')->paginate(5);
-
+        $paquete = $this->packages($user, 1);
 
         return Inertia::render('Packages/ListPackages', [
             'registeredPackages' => $paquete
+        ]);
+    }
+
+    /**
+     * Shows the history of the received packages
+     */
+    public function history(Request $request)
+    {
+
+        Gate::authorize('view', Paquete::class);
+
+        $user = $request->user();
+
+        $paquete = $this->packages($user, 2);
+
+        return Inertia::render('Packages/History', [
+            'historyPackages' => $paquete
         ]);
     }
 
@@ -106,12 +120,21 @@ class PaqueteController extends Controller
     {
         Gate::authorize('eliminated', Paquete::class);
 
-        $user = $request->user();
+        $paquete = Paquete::select([
+            'paquetes.id',
+            'paquetes.nombrePaquete',
+            'paquetes.remitente',
+            'paquetes.horaLlegadaPaquete',
+            'paquetes.estadoEntrega',
+            'destinatario.name as usuarioNombre',
+            'recepcion.name as usuarioRecepcion'
+        ])
+            ->join('users as destinatario', 'destinatario.id', '=', 'paquetes.usuarioDestinatario')
+            ->join('users as recepcion', 'recepcion.id', '=', 'paquetes.usuarioRecepcion')
+            ->where('estadoPaquete', 3)->paginate(5);
 
-        $paquete = $this->packages($user, 3);
-
-        return Inertia::render('Packages/Packages', [
-            'registeredPackages' => $paquete
+        return Inertia::render('Packages/DeletedPackages', [
+            'deletedPackages' => $paquete
         ]);
     }
 

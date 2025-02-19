@@ -19,8 +19,8 @@ export default function SendPackage({packageId}: {packageId: number}) {
         e.preventDefault()
         patch(route('paquete.enviado', packageId), {
             onSuccess: () => {
-                closeModal()
                 reset()
+                closeModal()
                 toast.success('El paquete se ha editado correctamente')
             },
             onError: () => {

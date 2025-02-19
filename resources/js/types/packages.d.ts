@@ -23,6 +23,7 @@ export interface Data {
     usuarioRecibio?:     string;
     estadoEntrega?:     number;
     usuarioNombre?:      string;
+    usuarioRecepcion?: string;
 }
 
 export interface PaginationLink {

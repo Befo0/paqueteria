@@ -24,8 +24,8 @@ export default function ChangeRole({ user, roles }: Props) {
         e.preventDefault()
         patch(route('admin.roles', user), {
             onSuccess: () => {
-                closeModal()
                 reset()
+                closeModal()
                 toast.success('El cambio de rol ha sido exitoso')
             },
             onError: () => {
