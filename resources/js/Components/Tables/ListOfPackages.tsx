@@ -2,7 +2,6 @@ import InspectPackage from "../Forms/InspectPackage";
 import Pagination from "../Links/Pagination";
 import { Toaster } from "sonner";
 import { Data, PaginationLink } from "@/types/packages";
-import InspectDeletedPackage from "../Forms/InspectDeletedPackage";
 import Unauthorized from "../Unauthorized";
 import { Link } from "@inertiajs/react";
 
