@@ -21,7 +21,7 @@ export default function History({ historyPackages }: { historyPackages: Package 
             {
                 user.idRol === 1 || user.idRol === 3
                     ?
-                    <HistoryPackages history={historyPackages.data} links={historyPackages.links} user={user} />
+                    <HistoryPackages history={historyPackages.data} links={historyPackages.links} />
                     :
                     <Unauthorized>
                         No tienes permisos para ingresar a esta pagina
