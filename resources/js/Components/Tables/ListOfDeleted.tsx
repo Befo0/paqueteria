@@ -31,7 +31,7 @@ export default function ListOfDeleted({ deleted, links }: Props) {
                                         <th className="px-6 py-3">Usuario Destinatario</th>
                                         <th className="px-6 py-3">Remitente</th>
                                         <th className="px-6 py-3">Fecha de entrega</th>
-                                        <th className="px-6 py-3 text-center">Usuario Recepcion</th>
+                                        <th className="px-6 py-3">Usuario Recepcion</th>
                                     </tr>
                                 </thead>
                                 <tbody>

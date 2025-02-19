@@ -31,7 +31,7 @@ export default function HistoryPackages({ history, links }: Props) {
                                         <th className="px-6 py-3">Remitente</th>
                                         <th className="px-6 py-3">Forma de recibir</th>
                                         <th className="px-6 py-3">Quien recibio</th>
-                                        <th className="px-6 py-3 text-center">Usuario Recepcion</th>
+                                        <th className="px-6 py-3">Usuario Recepcion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
