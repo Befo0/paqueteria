@@ -40,7 +40,7 @@ export default function ListOfPackages({ packages, links }: Props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {packages.map((content) => (
+                                        {registeredPackages.map((content) => (
                                             <tr
                                                 key={content.id}
                                                 className="border-b border-gray-300"

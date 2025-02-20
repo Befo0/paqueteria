@@ -57,7 +57,7 @@ export default function ListPackagesReception({ registeredPackages, links, user 
                                                     content.estadoEntrega !== 1 && (content.usuarioRecibio === null && content.estadoEntrega !== null) && <SendPackage packageId={content.id} />
                                                 }
                                                 {
-                                                    user.id === 1 && content.estadoEntrega === null && <DeletePackage packageId={content.id} />
+                                                    user.idRol === 1 && content.estadoEntrega === null && <DeletePackage packageId={content.id} />
                                                 }
                                             </td>
                                         </tr>

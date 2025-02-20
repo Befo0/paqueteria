@@ -53,7 +53,7 @@ class PaqueteController extends Controller
 
         $user = $request->user();
 
-        $paquete = Paquete::select(['id', 'nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio'])->where('usuarioDestinatario', $user->id)->where('estadoPaquete', 1)->paginate(5);
+        $paquete = Paquete::select(['id', 'nombrePaquete', 'descripcionPaquete', 'remitente', 'horaLlegadaPaquete', 'usuarioRecibio', 'estadoEntrega'])->where('usuarioDestinatario', $user->id)->where('estadoPaquete', 1)->paginate(5);
 
         return Inertia::render('Packages/Packages', [
             'registeredPackages' => $paquete
