@@ -194,7 +194,7 @@ class PaqueteController extends Controller
             'estadoEntrega' => $estado
         ];
 
-        if ($estado === 1) {
+        if ((int)$estado === 1) {
             $changes['usuarioRecibio'] = $request->user()->name;
         }
 
