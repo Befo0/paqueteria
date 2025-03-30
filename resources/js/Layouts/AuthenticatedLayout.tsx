@@ -1,5 +1,5 @@
 import Dropdown from '@/Components/Modals/Dropdown';
-import {LogoMiBanco} from '@/Components/Logos';
+import { ApplicationLogo } from '@/Components/Logos';
 import NavLink from '@/Components/Links/NavLink';
 import ResponsiveNavLink from '@/Components/Links/ResponsiveNavLink';
 import { PageProps } from '@/types';
@@ -25,7 +25,7 @@ export default function Authenticated({
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href={route('main')}>
-                                    <LogoMiBanco width="150" height="34" viewBox="0 0 150 34" />
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
